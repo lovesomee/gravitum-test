@@ -1,0 +1,1 @@
+INSERT INTO users (title, description, status) VALUES ($1, $2, $3)

@@ -1,0 +1,6 @@
+{
+  "port": 80,
+  "database": {
+    "PostgresConnection": "postgres://root:rpass@gravitum-db:5432/gravitum-task?sslmode=disable"
+  }
+}
