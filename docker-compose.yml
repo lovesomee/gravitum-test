@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  server:
+    container_name: "gravitum-api"
+    build:
+      context: ../../OneDrive/Desktop/test-task
+      dockerfile: "Dockerfile"
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - database
+
+  database:
+    container_name: "gravitum-db"
+    image: postgres:15
+    restart: always
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=rpass
+      - POSTGRES_DB=gravitum-task
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+volumes:
+  db-data:
