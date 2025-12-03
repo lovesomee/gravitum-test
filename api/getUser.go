@@ -11,14 +11,14 @@ func GetUser(userService UserService) func(http.ResponseWriter, *http.Request) {
 		users, err := userService.GetUser()
 		if err != nil {
 			log.Println(err)
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, "failed to get users", http.StatusInternalServerError)
 			return
 		}
 
 		resp, err := json.Marshal(users)
 		if err != nil {
 			log.Println(err)
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, "failed to marshal users", http.StatusInternalServerError)
 			return
 		}
 

@@ -20,7 +20,7 @@ func (r *Repository) SelectUsers() ([]models.Users, error) {
 
 	rows, err := r.db.Query(selectUsersSql)
 	if err != nil {
-		return []models.Users{}, err
+		return nil, err
 	}
 
 	defer rows.Close()
@@ -35,9 +35,13 @@ func (r *Repository) SelectUsers() ([]models.Users, error) {
 			&user.CreatedAt,
 			&user.UpdatedAt,
 		); err != nil {
-			return []models.Users{}, err
+			return nil, err
 		}
 		users = append(users, user)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
 	}
 
 	return users, nil
@@ -47,11 +51,11 @@ func (r *Repository) SelectUsers() ([]models.Users, error) {
 var insertUsersSql string
 
 func (r *Repository) InsertUsers(users models.Users) error {
-	_, err := r.db.Exec(insertUsersSql, users.FirstName, users.LastName, users.LastName)
+	_, err := r.db.Exec(insertUsersSql, users.FirstName, users.LastName, users.Sex)
 	if err != nil {
 		return err
 	}
-	return err
+	return nil
 }
 
 //go:embed sql/update_user.sql
@@ -62,5 +66,5 @@ func (r *Repository) UpdateUsers(users models.Users) error {
 	if err != nil {
 		return err
 	}
-	return err
+	return nil
 }
