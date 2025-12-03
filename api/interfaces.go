@@ -1,9 +1,13 @@
 package api
 
-import "gravitum-test/models"
+import (
+	"context"
+
+	"gravitum-test/models"
+)
 
 type UserService interface {
-	AddUser(user models.Users) error
-	UpdateUser(user models.Users) error
-	GetUser() ([]models.Users, error)
+	AddUser(ctx context.Context, user models.Users) error
+	UpdateUser(ctx context.Context, user models.Users) error
+	GetUser(ctx context.Context) ([]models.Users, error)
 }
